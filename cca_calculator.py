@@ -13,9 +13,7 @@ def check_existence(stock):
     if "Quote not found for ticker symbol:" in result:
         print(stock, " is not found/recognized, SKIPPING")
         skip = True
-        return skip
-    else:
-        return skip
+    return skip
 
 def get_price_marketCap(stock):
     tick = Ticker(stock)
