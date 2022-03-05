@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 from yahooquery import Ticker
 from datetime import datetime
+import time
 
 #Initialize dataframe
 list_of_columns = ['COMPANY NAME','SHARE PRICE ($/share)','OUTSTANDING SHARES','MARKET CAP ($M)',
@@ -39,16 +40,18 @@ def get_price_marketCap(stock):
 
 def get_outstandingShares_enterpriseValue_peg(stock):
     tick = Ticker(stock)
-    shares_outstanding = tick.key_stats[stock]['sharesOutstanding']
-    enterprise_val = tick.key_stats[stock]['enterpriseValue']
-    peg = tick.key_stats[stock]['pegRatio']
+    ticker = tick.key_stats[stock]
+    shares_outstanding = ticker['sharesOutstanding']
+    enterprise_val = ticker['enterpriseValue']
+    peg = ticker['pegRatio']
     return shares_outstanding,enterprise_val,peg
 
 def get_totalDebt_totalCash_EBITDA(stock):
     tick = Ticker(stock)
-    debt = tick.financial_data[stock]['totalDebt']
-    cash = tick.financial_data[stock]['totalCash']
-    EBITDA = tick.financial_data[stock]['ebitda']
+    ticker = tick.financial_data[stock]
+    debt = ticker['totalDebt']
+    cash = ticker['totalCash']
+    EBITDA = ticker['ebitda']
     return debt, cash, EBITDA
 
 def get_dilutedEps_revenue_EBIT(stock):
@@ -134,3 +137,5 @@ if result_save_folder == '':
 else:
     df_main.to_excel(result_save_folder+'//'+today+".xlsx", sheet_name='CCA_Calculator_results')
     print("Results saved to: ", result_save_folder+'//'+today+".xlsx")
+
+time.sleep(5)
