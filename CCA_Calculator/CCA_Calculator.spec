@@ -4,7 +4,7 @@
 block_cipher = None
 
 
-a = Analysis(['CCA_Calculator.py'],
+a = Analysis(['cca_calculator.py'],
              pathex=['C:\\Users\\User\\anaconda3\\envs\\ccacalculator\\Lib\\site-packages'],
              binaries=[],
              datas=[],
@@ -26,7 +26,7 @@ exe = EXE(pyz,
           a.zipfiles,
           a.datas,  
           [],
-          name='CCA_Calculator',
+          name='cca_calculator',
           debug=False,
           bootloader_ignore_signals=False,
           strip=False,

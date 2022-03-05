@@ -10,3 +10,6 @@ To use exe:
 
 Sample csv file:
 - sample_companies.csv
+
+To compile to exe:
+pyinstaller -F --paths=C:\Users\User\anaconda3\envs\ccacalculator\Lib\site-packages  cca_calculator.py
