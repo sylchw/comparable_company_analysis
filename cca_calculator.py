@@ -62,8 +62,15 @@ def get_dilutedEps_revenue_EBIT(stock):
 
 def get_quarterlyRevenueGrowth(stock):
     tick = Ticker(stock)
-    data = tick.earnings_trend[stock]['trend'][0]['growth']
-    return data
+    data = tick.earnings[stock]['financialsChart']['quarterly']
+    total_data_num = len(data)
+    if total_data_num >= 2:
+        latest_quarter = data[len(data)-1]['revenue']
+        quarter_prior = data[len(data)-2]['revenue']
+        quarterly_revenue_growth = (latest_quarter-quarter_prior)/quarter_prior*100
+    else:
+        quarterly_revenue_growth = 'No Data'
+    return quarterly_revenue_growth
     
 def express_in_MM(number):
     return number/1_000_000
