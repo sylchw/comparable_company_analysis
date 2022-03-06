@@ -127,16 +127,24 @@ if __name__ == "__main__":
             df_result_temp = pd.DataFrame(company_data_dict, index=[0])
             df_main = pd.concat([df_main,df_result_temp], ignore_index=True)
 
+
+        #replace empty strings with nan for mean calculation
+        df_main = df_main.replace(r'^\s*$', np.nan, regex=True)
+
         #Calculate Averages
         print("Calculating averages")
+        list_of_columns_to_calculate_average = ['EBITDA/EBIT MARGIN (%)','EBITDA/EBIT PROJ GROWTH (%)','EV/REVENUE (x)',
+                                                    'EV/EBITDA (x)','EV/EBIT (x)','PEG 5Y Expected(x)']
+
         average_row_dict = {}
         for col_name in list_of_columns:
             if col_name == 'COMPANY NAME':
                 average_row_dict[col_name] = 'Average/Median'
-            elif col_name == 'EBITDA/EBIT MARGIN (%)':
-                average_row_dict[col_name] = df_main["EBITDA/EBIT MARGIN (%)"].mean()
+            elif col_name in list_of_columns_to_calculate_average:
+                print(col_name)
+                average_row_dict[col_name] = df_main[col_name].mean()
             else:
-                average_row_dict[col_name] = 0
+                average_row_dict[col_name] = None
 
         df_result_temp = pd.DataFrame(average_row_dict, index=[0])
         df_main = pd.concat([df_main,df_result_temp], ignore_index=True)
