@@ -152,12 +152,19 @@ if __name__ == "__main__":
         df_result_temp = pd.DataFrame(average_row_dict, index=[0])
         df_main = pd.concat([df_main,df_result_temp], ignore_index=True)
 
+        #Calculate Relative Company Value
+        df_main['Relative Fair Value'] = ((df_main.iloc[len(df_main)-1]['EV/EBIT (x)'] * df_main['EBIT ($M)'] * 1_000_000) - df_main['TOTAL DEBT ($M)'] * 1_000_000)/df_main['OUTSTANDING SHARES']
+        list_of_columns.append('Relative Fair Value')
+        
         #Convert types to float
         for convert_type_col in list_of_columns[1:]:
             df_main[convert_type_col] = df_main[convert_type_col].astype(float)
 
         #Change the values to 2 decimal place
         df_main = df_main.round(2)
+
+        print("Results preview")
+        print(df_main.head())
 
         #save the file
         today = str(datetime.now())
