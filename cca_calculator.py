@@ -27,7 +27,11 @@ def get_outstandingShares_enterpriseValue_peg(stock):
     ticker = tick.key_stats[stock]
     shares_outstanding = ticker['sharesOutstanding']
     enterprise_val = ticker['enterpriseValue']
-    peg = ticker['pegRatio']
+    try:
+        peg = ticker['pegRatio']
+    except:
+        print("Invalid PEG Ratio")
+        peg = None
     return shares_outstanding,enterprise_val,peg
 
 def get_totalDebt_totalCash_EBITDA(stock):
