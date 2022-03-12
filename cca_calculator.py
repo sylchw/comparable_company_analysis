@@ -6,7 +6,6 @@ from datetime import datetime
 import time
 import traceback
 
-#define functions
 def check_existence(stock):
     skip = False
     result = Ticker(stock).price[stock]
@@ -30,7 +29,7 @@ def get_outstandingShares_enterpriseValue_peg(stock):
     try:
         peg = ticker['pegRatio']
     except:
-        print("Invalid PEG Ratio")
+        print("Invalid PEG Ratio for", stock)
         peg = None
     return shares_outstanding,enterprise_val,peg
 
@@ -153,6 +152,12 @@ if __name__ == "__main__":
         df_result_temp = pd.DataFrame(average_row_dict, index=[0])
         df_main = pd.concat([df_main,df_result_temp], ignore_index=True)
 
+        #Convert types to float
+        for convert_type_col in list_of_columns[1:]:
+            df_main[convert_type_col] = df_main[convert_type_col].astype(float)
+
+        #Change the values to 2 decimal place
+        df_main = df_main.round(2)
 
         #save the file
         today = str(datetime.now())
